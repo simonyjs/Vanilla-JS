@@ -24,3 +24,15 @@ title.addEventListener('click', handleClick);
 function handleClick() {
   title.style.color = 'blue';
 }
+
+const age = prompt('How old are you?');
+
+console.log(age);
+
+if (age >= 19 && age <= 21) {
+  console.log("You can Drink But you shouldn't");
+} else if (age > 21) {
+  console.log('You can Drink');
+} else {
+  console.log('You are Too Young');
+}
