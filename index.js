@@ -3,3 +3,9 @@
 const title = document.getElementById('title');
 console.log(title);
 title.innerHTML = 'Hi!!! This is inner HTML!';
+console.dir(title);
+title.style.color = 'red';
+// CSS와 동일하게 사용을 하려면 음... 비슷하게 적용하개 하려면
+// Queryselector를 사용한다
+const titleQuery = document.querySelector('#title');
+titleQuery.style.color = 'black';
