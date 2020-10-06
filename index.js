@@ -25,14 +25,35 @@ function handleClick() {
   title.style.color = 'blue';
 }
 
-const age = prompt('How old are you?');
+// const age = prompt('How old are you?');
 
-console.log(age);
+// console.log(age);
 
-if (age >= 19 && age <= 21) {
-  console.log("You can Drink But you shouldn't");
-} else if (age > 21) {
-  console.log('You can Drink');
-} else {
-  console.log('You are Too Young');
+// if (age >= 19 && age <= 21) {
+//   console.log("You can Drink But you shouldn't");
+// } else if (age > 21) {
+//   console.log('You can Drink');
+// } else {
+//   console.log('You are Too Young');
+// }
+
+// 2.6 DOM - If else - Function practice
+// https://flatuicolors.com/palette/defo 에서 원하는 색깔을 가져와서 상수로 지정한다
+const BASE_COLOR = 'rgb(46, 204, 113)'; //rgb로 하지 않으면 오류가 발생
+const OTHER_COLOR = '#7f8c8d';
+function handleClick() {
+  const currentColor = title.style.color;
+  console.log(currentColor);
+  if (currentColor === BASE_COLOR) {
+    title.style.color = OTHER_COLOR;
+  } else {
+    title.style.color = BASE_COLOR;
+  }
 }
+// init 함수를 지정하고 실행한다
+function init() {
+  title.style.color = BASE_COLOR;
+  title.addEventListener('click', handleClick);
+}
+init();
+// https://developer.mozilla.org/ko/docs/Web/Events 이벤트 참조
