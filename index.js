@@ -23,23 +23,23 @@ function init() {
 init();
 // 문제는 click event 가 발생하면 class="clicked" 로 바뀌면서 class="button"이 없어진다
 // 그래서 classList를 활용해서 추가 삭제만 가능하게 한다.
-// function handleClick() {
-//   const hasClass = title.classList.contains(CLICKED_CLASS);
-//   if (hasClass) {
-//     title.classList.remove(CLICKED_CLASS);
-//   } else {
-//     title.classList.add(CLICKED_CLASS);
-//   }
-// }
-// //가독성이 좋게 함수를 바꿀 수 있음
-// function handleClick() {
-//   const hasClass = title.classList.contains(CLICKED_CLASS);
-//   if (!hasClass) {
-//     title.classList.add(CLICKED_CLASS);
-//   } else {
-//     title.classList.remove(CLICKED_CLASS);
-//   }
-// }
+function handleClick() {
+  const hasClass = title.classList.contains(CLICKED_CLASS);
+  if (hasClass) {
+    title.classList.remove(CLICKED_CLASS);
+  } else {
+    title.classList.add(CLICKED_CLASS);
+  }
+}
+//가독성이 좋게 함수를 바꿀 수 있음
+function handleClick() {
+  const hasClass = title.classList.contains(CLICKED_CLASS);
+  if (!hasClass) {
+    title.classList.add(CLICKED_CLASS);
+  } else {
+    title.classList.remove(CLICKED_CLASS);
+  }
+}
 // toggle 이용하기
 function handleClick() {
   title.classList.toggle(CLICKED_CLASS);
