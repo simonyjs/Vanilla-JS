@@ -3,16 +3,46 @@ const toDoForm = document.querySelector('.js-toDoForm'),
   toDoList = document.querySelector('.js-toDoList');
 
 const TODOS_LS = 'toDos';
-// 먼저 toDos를 Array 로 정의해주고, 다음으로 const toDoObj 로 text, id 각각 text(key): text(value)
-// 그리고 id는 toDo를 Array화 한 것에서 +1을 해주는 것으로 정의한 뒤 toDo에 toDoObj를 push(추가)하게끔 했다.
-const toDos = [];
+
+// Array로 정한 toDo에 변화를 주기위해 const가 아닌 let을 사용함
+// 여기서 toDo는 예전 정보이고, cleanToDo는 delToDo를 실행한 다음의 새로운 정보이기 때문에
+// cleanToDo = toDo.filter 과정이 지나면 다시 toDo = cleanToDo가 되게끔 함
+// 그리고 마지막으로 나온 정보를 saveToDo를 통해 Local Storage에 저장함
+let toDos = [];
+
+// X버튼 누르면 Delete되는 delBtn기능 추가하기
+// click 할 때마다 addEventListener가 작동해서 console에 잘 출력되지만,
+// 두 개의 선택지 중 어떤 X 버튼을 눌렀는지는 확인 불가능함
+function deleteToDo(event) {
+  console.log(event);
+  // event.target을 통해서 target을 설정할 수 있지만
+  // 누가 father(부모)에 속하는지 알 수 없음
+  // 때문에 li의 id="1, 2"를 찾아야함
+  console.dir(event.target);
+
+  // 각각의 X버튼을 누르자 parentNode의 정보가 뜨고 <li id="1, 2">가 나옴
+  console.log(event.target.parentNode);
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
+  // Node.removeChild()을 이용해서 btn을 클릭해 target으로 지정된 li를 지움
+  const btn = event.target;
+  const li = btn.parentNode;
+  toDoList.removeChild(li);
+
+  // cleanToDo를 추가해서 li id를 한번에 전부 clean 하는 기능을 만듦
+  // filter는 Array의 모든 item에 function(함수)를 실행한 뒤,
+  // true 값인 item만 가지고 새로운 Array를 만듦
+  // 하지만 toDo.id와 li.id가 같은 값이 아님
+  // retrun하면 toDo.id는 int, li.id는 str으로 각각 다른 값을 가짐
+  const cleanToDos = toDos.filter(function (toDo) {
+    // parseInt() - string값을 int값으로 바꿔줌
+    return toDo.id !== parseInt(li.id);
+  });
+  toDos = cleanToDos;
+  saveToDos();
+}
 
 function saveToDos() {
-  // 이렇게 하면 LocalStorage 에는 그냥 object 로 저장됨 즉 저장은 무조건 String 으로 되기 때문에 풀어줘야 함
-  // localStorage.setItem(TODOS_LS, toDos);
-
-  // JSON.stringify(toDos) - JSON, JavaScript Object Notation
-  // JavaScript object를 stirng으로 바꿔줌
   localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
 }
 
@@ -20,22 +50,20 @@ function paintToDo(text) {
   const li = document.createElement('li');
   const delBtn = document.createElement('button');
   const span = document.createElement('span');
-  // newId를 정의하고 li.id를 newId와 같게 설정한 뒤 toDoObj의 id가 newId의 값을 같게 했다
   const newId = toDos.length + 1;
   delBtn.innerText = '❌';
+  // addEventListener으로 "click" event가 발생하면 function delToDo가 실행된다.
+  delBtn.addEventListener('click', deleteToDo);
   span.innerText = text;
   li.appendChild(delBtn);
   li.appendChild(span);
   li.id = newId;
   toDoList.appendChild(li);
-  // const toDoObj(Object)
-  // text(key): text(value) / id = toDo를 [] list화 한 것에서 +1함 / toDo에 toDoObj를 push(추가)함
   const toDoObj = {
     text: text,
     id: newId,
   };
   toDos.push(toDoObj);
-  // 반드시 push(Array 에 추가) 한 후에 saveToDos 를 호출해야 함 왜? Array 가 비어서 저장할 내용이 없음
   saveToDos();
 }
 
@@ -46,27 +74,12 @@ function handleSubmit(event) {
   toDoInput.value = '';
 }
 
-// TODO_LS를 load(가져)온 뒤 parse를 통해 string을 object로 바꾸고
-// parsedToDo 각각에 대해(forEach) paintToDo function(함수)를 실행함
 function loadToDos() {
   const loadedToDos = localStorage.getItem(TODOS_LS);
   if (loadedToDos !== null) {
-    // console.log(loadedToDos); - console에 LS에 저장된 toDo 목록을 보여줌
-    // console에 출력이 되지만, string 값으로 출력됨
-    console.log(loadedToDos);
-    // 위에서 바꿔준 string값을 다시 object 값으로 바꿔야함 > JSON.parse() > 다시 JSON사용
     const parsedToDos = JSON.parse(loadedToDos);
-    // JSON.parse(x) - parse(parsing, 문법적 해부)
-    // loadToDo 값인 string과 parsedToDo 값인 object를 console로 출력해 비교해봄
-    console.log(parsedToDos);
-    // forEach - array([] list)를 위한 function(함수) : 주어진 함수를 배열 요소 각각에 대해 실행합니다
-    // parsedToDo에 있는 각각의 항목(text로 입력한 값)에 대해 function를 실행함
     parsedToDos.forEach(function (toDo) {
-      // toDo 는 그냥 파라미터 이름일 뿐이다 parsedToDos 의 element라고 해석하자
-      console.log(toDo.text);
       paintToDo(toDo.text);
-      // 그 결과로 원래는 li id가 추가되어도 LS에 저장되지 않아서 화면을 새로고침하면 적어놓았던 toDos 가 지워졌었는데,
-      // 지금은 LS에 toDos value가 key와 대응하여 저장되어 화면 새로고침을 해도 toDos 가 화면에서 지워지지 않고 계속해서 남아있다.
     });
   }
 }
