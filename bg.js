@@ -3,6 +3,37 @@ const body = document.querySelector('body');
 
 const IMG_NUMBER = 3;
 
+const UNSPLASH_API_KEY = 'sTRAM16hUNZJ6JNbVDM-6c_j5qLChZVfj2SZU6NqoAI';
+const bgDesc = document.querySelector('.js-bg-desc');
+
+function getUnsplashImg(keyword) {
+  fetch(
+    `https://api.unsplash.com/search/photos/?client_id=${UNSPLASH_API_KEY}&query=${keyword}&orientation=landscape`
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (myJson) {
+      console.log(myJson);
+      // console.log(myJson.length);
+      const randomNo = Math.floor(Math.random() * myJson.results.length);
+      // console.log(myJson.results[randomNo].urls.full);
+      const apiImg = new Image();
+      apiImg.src = myJson.results[randomNo].urls.full;
+      apiImg.classList.add('bgImage');
+      // apiImg.addEventListener('loadend', handleImgLoad);
+      body.prepend(apiImg);
+      const apiImgDescription = myJson.results[randomNo].description;
+      const apiImgAltDescription = myJson.results[
+        randomNo
+      ].alt_description.toUpperCase();
+      const apiImgName = myJson.results[randomNo].user.name;
+      const apiImgLocation = myJson.results[randomNo].user.location;
+      bgDesc.innerText = `  ${
+        apiImgDescription === null ? apiImgAltDescription : apiImgDescription
+      } by ${apiImgName}  `;
+    });
+}
 // 다운받은 image들의 폴더 src(source) 제공
 // body의 자손 class로 image 추가(appendChild)
 function paintImage(imgNumber) {
@@ -18,8 +49,9 @@ function paintImage(imgNumber) {
   image.addEventListener('loadend', handleImgLoad);
 }
 
-function handleImgLoad() {
+function handleImgLoad(apiImg) {
   console.log('finished loading');
+  body.prepend(apiImg);
 }
 
 function genRandom() {
@@ -31,7 +63,8 @@ function genRandom() {
 
 function init() {
   const randomNumber = genRandom();
-  paintImage(randomNumber);
+  // paintImage(randomNumber);
+  getUnsplashImg('aircraft');
 }
 
 init();

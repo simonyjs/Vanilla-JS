@@ -1,24 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Something</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Jungsub Yoon" />
+    <title>Airboss Momonton</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div class="js-clock">
-      <h1>00:00</h1>
+    <div class="main">
+      <div class="js-clock clock">
+        <div class="clock-item js-am am"></div>
+        <div class="clock-item js-hh hh"></div>
+        <div class="clock-item js-mm mm"></div>
+        <div class="clock-item js-ss ss"></div>
+      </div>
+      <div class="name">
+        <form class="js-form form">
+          <input
+            class="form-name"
+            type="text"
+            placeholder="What is your name?"
+          />
+        </form>
+        <h4 class="js-greetings greetings"></h4>
+      </div>
+      <div class="todo">
+        <form class="js-toDoForm todo-form">
+          <input type="text" placeholder="Write a to do" />
+        </form>
+        <ul class="js-toDoList todo-list"></ul>
+      </div>
     </div>
-    <form class="js-form form">
-      <input type="text" placeholder="What is your name?" />
-    </form>
-    <h4 class="js-greetings greetings"></h4>
-    <form class="js-toDoForm">
-      <input type="text" placeholder="Write a to do" />
-    </form>
-    <ul class="js-toDoList"></ul>
-    <span class="js-wx"></span>
+    <div class="js-wx wx"></div>
+    <div class="js-bg-desc bg-desc"></div>
     <script src="clock.js"></script>
     <script src="greeting.js"></script>
     <script src="todo.js"></script>

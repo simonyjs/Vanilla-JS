@@ -6,7 +6,7 @@ body {
   cursor: pointer;
 }
 body {
-  color: #34495e;
+  color: white;
 }
 
 .clicked {
@@ -40,4 +40,47 @@ body {
   height: 100%;
   z-index: -1;
   animation: fadeIn 0.5s linear;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.clock {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 30vw;
+  margin: 0.5em;
+  font-size: 10em;
+}
+
+/* .clock-item {
+  font-size: 10em;
+} */
+.am,
+.ss {
+  font-size: 0.2em;
+  position: relative;
+  top: 30px;
+}
+
+.bg-desc {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 15px;
+  font-style: oblique;
+  color: aliceblue;
+}
+.wx {
+  position: absolute;
+  font-style: italic;
+  font-size: 18px;
+  top: 50px;
+  right: 50px;
 }
