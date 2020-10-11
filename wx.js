@@ -1,7 +1,54 @@
+const wx = document.querySelector('.js-wx');
 const COORD = 'coord';
 
 // https://openweathermap.org/api >
 const API_KEY = '41d9d4f7bc69b0e3853d0e9664f2a653';
+
+function getWx(lat, lon) {
+  /*Fetch API를 이용하면 Request나 Response와 같은 HTTP의 파이프라인을 구성하는 요소를 조작하는것이 가능합니다.
+  fetch('http://example.com/movies.json')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(JSON.stringify(myJson));
+  });
+네트워크에서 JSON 파일을 가져 와서 콘솔에 인쇄합니다. 
+간단한 fetch() 사용 흐름은 인수 한개(가져올 자원의 경로)를 가져오고 응답을 포함하는 약속 (Response 개체)을 반환하는 것입니다.
+
+이것은 단순한 HTTP Response이며, 실제 JSON이 아닙니다. 
+response 객체로부터 사진을 가져오기 위해서는 json() 메서드를 사용할 필요가 있습니다. 
+(Body의 믹스인 (역주:php의 트레이드와 같은것입니다. )으로 정의되어, 이것은 Request 객체와 Response 객체의 쌍방에 구현되어 있습니다.
+*/
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  )
+    // .then(function (json) {
+    //fetch로 API 서버로부터 전송되는 data가 모두 수신될 때까지 기다린 후(then), data가 수신이 완료된 후 JSON data를 가져온다
+    //   console.log(json);
+    // JSON data를 console로 확인해보면 body안에 locked: false로 볼 수가 없다
+    // })
+
+    // network 패널 안에 있는 response에서 JSON 정보를 console로 출력
+    .then(function (response) {
+      // Request URL 링크에 있던 이 정보들이 JSON data이다
+      // console.log(response.json());
+      // pending 대기중(보류중)이라고 출력
+
+      // 결과를 확인하고 json 으로 리턴한다
+      return response.json();
+    })
+    .then(function (json) {
+      // response에서 JSON Data 가져온 것을 pending(보류)하지 않고, 바로 JSON Data를 console에 출력
+      console.log(json);
+      // 원하는 값을 상수로 저장한다
+      const place = json.name;
+      const country = json.sys.country;
+      const humidity = json.main.humidity;
+      const temp = json.main.temp;
+      wx.innerText = `${place}, ${country} : ${temp}°C / ${humidity}%`;
+    });
+}
 
 // object 값을 string 값으로 바꿔 저장
 function saveCoord(coordObj) {
@@ -47,6 +94,9 @@ function loadCoord() {
     askCoord();
   } else {
     //   get wx
+    const parsedCoord = JSON.parse(loadedCoord);
+    // console.log(parsedCoord);
+    getWx(parsedCoord.lat, parsedCoord.long);
   }
 }
 function init() {
