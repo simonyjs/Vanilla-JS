@@ -45,8 +45,22 @@ response 객체로부터 사진을 가져오기 위해서는 json() 메서드를
       const place = json.name;
       const country = json.sys.country;
       const humidity = json.main.humidity;
-      const temp = json.main.temp;
-      wx.innerText = `${place}, ${country} : ${temp}°C / ${humidity}%`;
+      const temp = Math.round(json.main.temp);
+      const feels_like = Math.round(json.main.feels_like);
+      const temp_max = Math.ceil(json.main.temp_max);
+      const temp_min = Math.floor(json.main.temp_min);
+      const description = json.weather[0].description;
+      const unixSunrise = json.sys.sunrise;
+      const sunriseDate = new Date(unixSunrise * 1000)
+      const srHr = sunriseDate.getHours();
+      const srMm = sunriseDate.getMinutes();
+      const sunrise = `${srHr > 10 ? srHr : `0${srHr}`}:${srMm}`;
+      const unixSunset = json.sys.sunset;
+      const sunsetDate = new Date(unixSunset * 1000);
+      const ssHr = sunsetDate.getHours();
+      const ssMm = sunsetDate.getMinutes();
+      const sunset = `${ssHr > 10 ? ssHr : `0${ssHr}`}:${ssMm > 10 ? ssMm : `0${ssMm}`}`
+      wx.innerText = `${place}, ${country} : ${description.toUpperCase()} 🌡${temp}°C\n Feels:${feels_like}°C | Max:${temp_max}°C | Min:${temp_min}°C\nHumidity:${humidity}% ☀️${sunrise} 🌙${sunset}`;
     });
 }
 

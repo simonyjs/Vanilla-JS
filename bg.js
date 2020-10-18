@@ -3,6 +3,8 @@ const body = document.querySelector('body');
 
 const IMG_NUMBER = 3;
 
+const SEARCH_ITEM = 'travel';
+
 const UNSPLASH_API_KEY = 'sTRAM16hUNZJ6JNbVDM-6c_j5qLChZVfj2SZU6NqoAI';
 const bgDesc = document.querySelector('.js-bg-desc');
 
@@ -64,7 +66,7 @@ function genRandom() {
 function init() {
   const randomNumber = genRandom();
   // paintImage(randomNumber);
-  getUnsplashImg('aircraft');
+  getUnsplashImg(SEARCH_ITEM);
 }
 
 init();

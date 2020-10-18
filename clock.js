@@ -19,10 +19,10 @@ function getTime() {
   if (hours > 12) {
     clockAM.innerText = 'PM';
     hours = hours - 12;
-    clockHH.innerText = `${hours < 10 ? `$0{hours}` : hours}:`;
+    clockHH.innerText = `${hours < 10 ? `0${hours}` : hours}:`;
   } else {
     clockAM.innerText = 'AM';
-    clockHH.innerText = `${hours < 10 ? `$0{hours}` : hours}:`;
+    clockHH.innerText = `${hours < 10 ? `0${hours}` : hours}:`;
   }
   clockMM.innerText = `${minutes < 10 ? `0${minutes}` : minutes}`;
   clockSS.innerText = `${seconds < 10 ? `0${seconds}` : seconds}`;

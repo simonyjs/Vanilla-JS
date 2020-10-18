@@ -53,7 +53,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: row;
-  width: 30vw;
+  width: 40vw;
   margin: 0.5em;
   font-size: 10em;
 }
@@ -80,7 +80,55 @@ body {
 .wx {
   position: absolute;
   font-style: italic;
-  font-size: 18px;
+  font-size: 15px;
   top: 50px;
   right: 50px;
+}
+
+input,
+.greetings {
+  background: none;
+  appearance: none;
+  border: 0;
+  font-size: 30px;
+  color: white;
+  border-bottom: 2px solid white;
+}
+input::placeholder {
+  color: white;
+}
+
+input:focus,
+input:active {
+  outline: none;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 50px;
+}
+
+.form-name,
+.greetings {
+  font-size: 40px;
+}
+.form {
+  margin-bottom: 30px;
+}
+.greetings {
+  border: none;
+}
+li {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+button {
+  font-size: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  /* border-radius: 50%; */
 }
